@@ -1,0 +1,155 @@
+.recetas-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.recetas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.recetas-header h1 {
+  margin: 0;
+  color: #343a40;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+.loading, .error-message, .no-recetas {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+}
+
+.error-message {
+  color: #dc3545;
+}
+
+.recetas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.receta-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background-color: white;
+}
+
+.receta-card:hover {
+  transform: translateY(-5px);
+}
+
+.receta-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.receta-content {
+  padding: 1.5rem;
+}
+
+.receta-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #343a40;
+}
+
+.receta-ingredients, .receta-steps {
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.btn-view {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-view:hover {
+  background-color: #c82333;
+}
+
+.add-receta-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.5);
+  transition: all 0.3s ease;
+}
+
+.btn-add span {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.btn-add:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .recetas-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .search-bar {
+    max-width: 100%;
+  }
+  
+  .recetas-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-receta-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+}

@@ -1,0 +1,42 @@
+<div class="home-container">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Recetario</h1>
+      <p>Descubre, crea y comparte tus recetas favoritas</p>
+      <div class="hero-buttons">
+        <a routerLink="/recetas" class="btn-primary">Ver recetas</a>
+        <a routerLink="/auth/registro" class="btn-secondary">Registrarse</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured-recipes">
+    <h2>Recetas Destacadas</h2>
+    
+    <div *ngIf="loading" class="loading">
+      <p>Cargando recetas...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+    </div>
+    
+    <div *ngIf="!loading && !error" class="recipes-grid">
+      <div *ngIf="recetas.length === 0" class="no-recipes">
+        <p>No hay recetas disponibles en este momento.</p>
+      </div>
+      
+      <div *ngFor="let receta of recetas" class="recipe-card">
+        <div class="recipe-image">
+          <img src="https://via.placeholder.com/300x200" alt="{{ receta.titulo }}">
+        </div>
+        <div class="recipe-content">
+          <h3>{{ receta.titulo }}</h3>
+          <p class="recipe-ingredients">{{ receta.ingredientes.length }} ingredientes</p>
+          <p class="recipe-steps">{{ receta.pasos.length }} pasos</p>
+          <a [routerLink]="['/recetas', receta.id]" class="btn-view">Ver receta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

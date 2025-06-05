@@ -1,0 +1,122 @@
+<div class="receta-form-container">
+  <div *ngIf="loading" class="loading">
+    <p>Cargando receta...</p>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  
+  <div *ngIf="!loading">
+    <h1>{{ isEditing ? 'Editar' : 'Nueva' }} Receta</h1>
+    
+    <form (ngSubmit)="guardarReceta()" #recetaForm="ngForm">
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input 
+          type="text" 
+          id="titulo" 
+          name="titulo" 
+          [(ngModel)]="receta.titulo" 
+          required 
+          placeholder="Título de la receta"
+          #tituloInput="ngModel"
+        >
+        <div class="error-message" *ngIf="tituloInput.invalid && tituloInput.touched">
+          Por favor, ingresa un título para la receta
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h2>Ingredientes</h2>
+        
+        <div class="ingredientes-lista" *ngIf="receta.ingredientes.length > 0">
+          <div *ngFor="let ingrediente of receta.ingredientes; let i = index" class="ingrediente-item">
+            <input 
+              type="text" 
+              [(ngModel)]="receta.ingredientes[i]" 
+              [name]="'ingrediente' + i"
+              placeholder="Ingrediente"
+              required
+            >
+            <button type="button" class="btn-delete" (click)="eliminarIngrediente(i)" *ngIf="receta.ingredientes.length > 1">
+              <span>🗑️</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="add-item-form">
+          <input 
+            type="text" 
+            [(ngModel)]="nuevoIngrediente" 
+            name="nuevoIngrediente" 
+            placeholder="Nuevo ingrediente"
+          >
+          <button 
+            type="button" 
+            class="btn-add" 
+            (click)="agregarIngrediente()" 
+            [disabled]="!nuevoIngrediente.trim()"
+          >
+            Agregar
+          </button>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h2>Pasos</h2>
+        
+        <div class="pasos-lista" *ngIf="receta.pasos.length > 0">
+          <div *ngFor="let paso of receta.pasos; let i = index" class="paso-item">
+            <div class="paso-numero">{{ i + 1 }}</div>
+            <textarea 
+              [(ngModel)]="receta.pasos[i]" 
+              [name]="'paso' + i"
+              placeholder="Paso de preparación"
+              required
+              rows="2"
+            ></textarea>
+            <button type="button" class="btn-delete" (click)="eliminarPaso(i)" *ngIf="receta.pasos.length > 1">
+              <span>🗑️</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="add-item-form">
+          <textarea 
+            [(ngModel)]="nuevoPaso" 
+            name="nuevoPaso" 
+            placeholder="Nuevo paso"
+            rows="2"
+          ></textarea>
+          <button 
+            type="button" 
+            class="btn-add" 
+            (click)="agregarPaso()" 
+            [disabled]="!nuevoPaso.trim()"
+          >
+            Agregar
+          </button>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn-secondary" 
+          routerLink="{{ isEditing ? '/recetas/' + receta.id : '/recetas' }}"
+        >
+          Cancelar
+        </button>
+        
+        <button 
+          type="submit" 
+          class="btn-primary" 
+          [disabled]="recetaForm.invalid || saving"
+        >
+          {{ saving ? 'Guardando...' : 'Guardar Receta' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Recetario</a>
+    
+    <div class="nav-links">
+      <a routerLink="/recetas" class="nav-link">Recetas</a>
+      
+      <ng-container *ngIf="!isLoggedIn()">
+        <a routerLink="/auth/login" class="nav-link">Iniciar sesión</a>
+        <a routerLink="/auth/registro" class="nav-link">Registrarse</a>
+      </ng-container>
+      
+      <ng-container *ngIf="isLoggedIn()">
+        <a routerLink="/recetas/nueva" class="nav-link">Nueva Receta</a>
+        <a *ngIf="currentUser && currentUser.id" [routerLink]="['/usuario', currentUser.id]" class="nav-link">Mi Perfil</a>
+        <button class="nav-link logout-btn" (click)="logout()">Cerrar sesión</button>
+      </ng-container>
+    </div>
+  </div>
+</nav>

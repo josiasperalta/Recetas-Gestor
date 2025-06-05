@@ -1,0 +1,90 @@
+<div class="perfil-container">
+  <div *ngIf="loading" class="loading">
+    <p>Cargando perfil...</p>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn-secondary" routerLink="/">Volver al inicio</button>
+  </div>
+  
+  <div *ngIf="!loading && !error && usuario" class="perfil-content">
+    <div class="perfil-header">
+      <div class="perfil-info">
+        <h1>{{ usuario.nombre }}</h1>
+        <p class="perfil-email">{{ usuario.email }}</p>
+      </div>
+      
+      <div *ngIf="esMiPerfil()" class="perfil-actions">
+        <a routerLink="/recetas/nueva" class="btn-primary">Nueva Receta</a>
+      </div>
+    </div>
+    
+    <div class="perfil-tabs">
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'creadas'"
+        (click)="setActiveTab('creadas')"
+      >
+        Recetas Creadas ({{ recetasCreadas.length }})
+      </button>
+      
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'favoritas'"
+        (click)="setActiveTab('favoritas')"
+      >
+        Recetas Favoritas ({{ recetasFavoritas.length }})
+      </button>
+    </div>
+    
+    <div class="perfil-recetas">
+      <!-- Recetas Creadas -->
+      <div *ngIf="activeTab === 'creadas'">
+        <div *ngIf="recetasCreadas.length === 0" class="no-recetas">
+          <p>No hay recetas creadas aún.</p>
+          <a *ngIf="esMiPerfil()" routerLink="/recetas/nueva" class="btn-secondary">Crear mi primera receta</a>
+        </div>
+        
+        <div *ngIf="recetasCreadas.length > 0" class="recetas-grid">
+          <div *ngFor="let receta of recetasCreadas" class="receta-card">
+            <div class="receta-image">
+              <img src="https://via.placeholder.com/300x200" alt="{{ receta.titulo }}">
+            </div>
+            <div class="receta-content">
+              <h3>{{ receta.titulo }}</h3>
+              <p class="receta-ingredients">{{ receta.ingredientes.length }} ingredientes</p>
+              <p class="receta-steps">{{ receta.pasos.length }} pasos</p>
+              <div class="receta-actions">
+                <a [routerLink]="['/recetas', receta.id]" class="btn-view">Ver</a>
+                <a *ngIf="esMiPerfil()" [routerLink]="['/recetas/editar', receta.id]" class="btn-edit">Editar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recetas Favoritas -->
+      <div *ngIf="activeTab === 'favoritas'">
+        <div *ngIf="recetasFavoritas.length === 0" class="no-recetas">
+          <p>No hay recetas favoritas aún.</p>
+          <a routerLink="/recetas" class="btn-secondary">Explorar recetas</a>
+        </div>
+        
+        <div *ngIf="recetasFavoritas.length > 0" class="recetas-grid">
+          <div *ngFor="let receta of recetasFavoritas" class="receta-card">
+            <div class="receta-image">
+              <img src="https://via.placeholder.com/300x200" alt="{{ receta.titulo }}">
+            </div>
+            <div class="receta-content">
+              <h3>{{ receta.titulo }}</h3>
+              <p class="receta-ingredients">{{ receta.ingredientes.length }} ingredientes</p>
+              <p class="receta-steps">{{ receta.pasos.length }} pasos</p>
+              <a [routerLink]="['/recetas', receta.id]" class="btn-view">Ver receta</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
